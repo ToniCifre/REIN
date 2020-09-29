@@ -1,4 +1,3 @@
-import math
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -6,10 +5,6 @@ from elasticsearch import Elasticsearch
 from elasticsearch.helpers import scan
 from elasticsearch.exceptions import NotFoundError, TransportError
 
-import numpy as np
-import matplotlib.pyplot as plt
-
-from commons import *
 from scipy.optimize import curve_fit
 
 
@@ -17,12 +12,12 @@ def heaps(n, k, beta):
     return k * (n ** beta)
 
 
-index = 'inovels_2'
+index = 'inovels'  # inovels_1, inovels_2
 
+aux = [0]
 try:
-    client = Elasticsearch()
     voc = {}
-    aux = [0]
+    client = Elasticsearch()
     sc = scan(client, index=index, query={"query": {"match_all": {}}})
     for s in sc:
         try:
@@ -38,22 +33,22 @@ try:
         except TransportError:
             pass
 
-    ranks = np.arange(1., len(aux) + 1)
-    ranks2 = np.arange(1., 260000)
-
-    popt, pcov = curve_fit(heaps, ranks, aux)
-    plt.plot(ranks2, heaps(ranks2, *popt), 'y-', label=f'fit k={round(popt[0],2)}, beta={round(popt[1],2)}')
-    print(f'Fit of k and alpha: {popt}')
-
-    plt.plot(ranks, aux, 'b-', label=f'Real Data')
-    plt.plot(ranks2, ranks2, 'r-')
-
-    plt.title('HEAPS')
-    plt.legend()
-    plt.grid()
-    plt.grid()
-
-    plt.show()
-
 except NotFoundError:
     print(f'Index {index} does not exists')
+    exit(1)
+
+ranks = np.arange(1., len(aux) + 1)
+ranks2 = np.arange(1., 260000)
+
+popt, pcov = curve_fit(heaps, ranks, aux)
+
+plt.plot(ranks, aux, 'b-', label=f'Real Data')
+plt.plot(ranks2, heaps(ranks2, *popt), 'y-', label=f'fit k={round(popt[0], 2)}, beta={round(popt[1], 2)}')
+
+plt.plot(ranks2, ranks2, 'r-')
+
+plt.title('HEAPS')
+plt.legend()
+plt.grid()
+
+plt.show()

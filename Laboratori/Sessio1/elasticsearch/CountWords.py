@@ -25,7 +25,7 @@ import argparse
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--index', default='inovels', required=False, help='Index to search')
+    parser.add_argument('--index', default='inovels_2', required=False, help='Index to search')
     parser.add_argument('--alpha', action='store_true', default=False, help='Sort words alphabetically')
     args = parser.parse_args()
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
         print(f'Different {len(lpal)} Words')
         print(f'{total_words} Total Words')
 
-        write_csv(csv_rowlist, "CountWords")
+        write_csv(csv_rowlist, "CountWords_2")
 
     except NotFoundError:
         print(f'Index {index} does not exists')

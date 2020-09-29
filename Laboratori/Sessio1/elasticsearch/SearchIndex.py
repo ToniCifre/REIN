@@ -26,8 +26,8 @@ from elasticsearch_dsl.query import Q
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--index', default=None, required=True, help='Index to search')
-    parser.add_argument('--text', default=None, help='text to search')
+    parser.add_argument('--index', default='inovels_2', required=False, help='Index to search')
+    parser.add_argument('--text', default='good', help='text to search')
     parser.add_argument('--query', default=None, nargs=argparse.REMAINDER, help='Lucene query')
 
     args = parser.parse_args()

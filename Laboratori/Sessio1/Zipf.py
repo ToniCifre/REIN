@@ -1,5 +1,3 @@
-
-import re
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -35,50 +33,33 @@ def zipf_fit(frequency, dwnTrim, topTrim):
     return k, alpha
 
 
-def clean_words(words):
-    aux = []
-    pattern = re.compile("[A-Za-z][a-z'a-z]{2,9}")
-    for row in words:
-        if pattern.match(row[1]) and int(row[0]) >= 4:
-            aux.append(int(row[0]))
-
-    print(f'{len(words) - len(aux)} words removed.')
-    return aux
-
-
 print("Reading words.")
-CountWords = read_csv("CountWords")
-print("Cleaning words.")
-frequencies = clean_words(CountWords)
-# frequencies = np.array([int(row[0]) for row in CountWords if row])
-total_words = np.sum(frequencies)
+CountWords = read_csv("CountWords_1")
 
-frequencies = np.array([row / total_words for row in frequencies if row])
+print("Cleaning words.")
+CleanCountWords = clean_words(CountWords)
+
+sumWords = np.array([row[0] for row in CleanCountWords if row])
+total_words = np.sum(sumWords)
+
+frequencies = np.array([row / total_words for row in sumWords if row])
 ranks = np.arange(1., float(len(frequencies)) + 1)
 
 plt.plot(ranks, frequencies, 'b.', label='real data')
 
 k, alpha = zipf_fit(frequencies, 0.01, 0.7)
-plt.plot(ranks, zipf(ranks, k, alpha), 'y-', label=f'k={k}, a={alpha}')
-k, alpha = zipf_fit(frequencies, 0, 1)
-plt.plot(ranks, zipf(ranks, k, alpha), 'g-', label=f'k={k}, a={alpha}')
-k, alpha = zipf_fit(frequencies, 0.05, 0.6)
-plt.plot(ranks, zipf(ranks, k, alpha), 'b-', label=f'k={k}, a={alpha}')
-
+plt.plot(ranks, zipf(ranks, k, alpha), 'y-', label=f'k={round(k,4)}, alpha={round(alpha,4)}')
 
 popt, pcov = curve_fit(zipf, ranks, frequencies)
+plt.plot(ranks, zipf(ranks, *popt), 'r-', label=f'fit k={round(popt[0],4)}, beta={round(popt[1],4)}')
 print(f'Fit of k and alpha: {popt}')
-plt.plot(ranks, zipf(ranks, *popt), 'r-', label=f'fit {popt}')
-
-
-plt.xscale('log')
-plt.yscale('log')
 
 plt.title('ZIPF')
-
 plt.xlabel('Range')
 plt.ylabel('Frequency')
 
+plt.xscale('log')
+plt.yscale('log')
 plt.legend()
 plt.grid()
 

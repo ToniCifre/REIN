@@ -1,3 +1,4 @@
+import re
 import csv
 
 
@@ -13,3 +14,13 @@ def write_csv(csv_rowlist, file_name):
         writer = csv.writer(file)
         writer.writerows(csv_rowlist)
 
+
+def clean_words(words):
+    aux = []
+    pattern = re.compile("[A-Za-z][a-z'a-z]{2,9}")
+    for row in words:
+        if pattern.match(row[1]) and int(row[0]) >= 4:
+            aux.append(row)
+
+    print(f'{len(words) - len(aux)} words removed.')
+    return aux
