@@ -34,7 +34,7 @@ def zipf_fit(frequency, dwnTrim, topTrim):
 
 
 print("Reading words.")
-CountWords = read_csv("CountWords_1")
+CountWords = read_csv("CountWords_All")
 
 print("Cleaning words.")
 CleanCountWords = clean_words(CountWords)
