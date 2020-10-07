@@ -1,5 +1,9 @@
+#Sessió 1: ElasticSearch i les lleis de Zipf i Heaps
+
+###Abstract
 Per aquesta sessió de laboratori ens hem dedicat a aplicar i comprovar les lleis de *Zipf* i *Heaps* amb l’us de 
 l’eina *Elastichsearch* mitjançant el llenguatge de programació *Python*.
+
 
 La llei de *Zipf*
 =================
@@ -23,7 +27,7 @@ diccions que contenien caràcters estranys (tipus ä, accents,...) o que fossin 
 un mínim de 4 aparicions en tota la nostra agrupació.
 
 Per últim, al realitzar la crida a la funció on hem aplicat la llei de *Zipf* hem habilitat dos parametres que ens 
-permet fer una retallada més exaustiva a les dades d’on extraurem els valors constants, *k* i \(\alpha\).
+permet fer una retallada més exaustiva a les dades d’on extraurem els valors constants, *k* i *alpha*.
 
 Processament de les dades
 -------------------------
@@ -47,7 +51,7 @@ Per ultim retornem una llista amb les noves freqüències que calculades a parti
 Resultats
 ---------
 
-Un cop obtingudes els valors de \(\aplha\) i \(k\) amb la funció prèviament descrita, realitzarem múltiples gràfiques 
+Un cop obtingudes els valors de *aplha* i *k* amb la funció prèviament descrita, realitzarem múltiples gràfiques 
 variant la quantitat que hem retallat al fer el calcul. Com podeu observar a les figures adjuntades al text, hem oscil·lat
  entre uns valors de 1-2 % per als mots en una major nombre d’aparicions i un 30-40% per als termes més inferiors.
 
