@@ -27,6 +27,7 @@ import argparse
 
 import numpy as np
 
+
 def search_file_by_path(client, index, path):
     """
     Search for a file using its path
@@ -43,7 +44,7 @@ def search_file_by_path(client, index, path):
 
     lfiles = [r for r in result]
     if len(lfiles) == 0:
-        raise NameError('File [%s] not found'%path)
+        raise NameError('File [%s] not found' % path)
     else:
         return lfiles[0].meta.id
 
@@ -90,7 +91,7 @@ def toTFIDF(client, index, file_id):
 
     tfidfw = []
     for (t, w), (_, df) in zip(file_tf, file_df):
-        tfidfw.append((t, (w/max_freq) * math.log2(dcount/df)))
+        tfidfw.append((t, (w / max_freq) * math.log2(dcount / df)))
     print(tfidfw)
     return normalize(tfidfw)
 
@@ -105,7 +106,7 @@ def normalize(tw):
     """
     norm = np.sqrt(np.sum([np.power(row, 2) for _, row in tw]))
 
-    return [(term, tfidf/norm) for term, tfidf in tw]
+    return [(term, tfidf / norm) for term, tfidf in tw]
 
 
 def print_term_weight_vector(twv):
@@ -117,6 +118,7 @@ def print_term_weight_vector(twv):
     """
     print(twv)
 
+
 def cosine_similarity(tw1, tw2):
     """
     Computes the cosine similarity between two weight vectors, terms are alphabetically ordered
@@ -125,21 +127,39 @@ def cosine_similarity(tw1, tw2):
     :param tw2:
     :return:
     """
-    simil=0
-    for t, w in tw1:
-        if t not in [t for t, _ in tw2]:
-            print('polla')
-            tw2.append((t, 0))
-    for t, w in tw2:
-        if t not in [t for t, _ in tw1]:
-            tw1.append((t, 0))
-    tw1 = sorted(tw1, key=lambda x: x[0])
-    tw2 = sorted(tw2, key=lambda x: x[0])
-    print(tw1)
-    print(tw2)
-    for (_, w1), (_, w2) in zip(tw1, tw2):
-        simil+= w1*w2
-    return simil
+    l = intersect(tw1, tw2)
+    return np.sum(l)
+    # simil = 0
+    # for t, w in tw1:
+    #     if t not in [t for t, _ in tw2]:
+    #         print('polla')
+    #         tw2.append((t, 0))
+    # for t, w in tw2:
+    #     if t not in [t for t, _ in tw1]:
+    #         tw1.append((t, 0))
+    # tw1 = sorted(tw1, key=lambda x: x[0])
+    # tw2 = sorted(tw2, key=lambda x: x[0])
+    # print(tw1)
+    # print(tw2)
+    # for (_, w1), (_, w2) in zip(tw1, tw2):
+    #     simil += w1 * w2
+    # return simil
+
+
+def intersect(l1, l2):
+    pos1 = 0
+    pos2 = 0
+    aux = []
+    while len(l1) > pos1 and len(l2) > pos2:
+        if l1[pos1][0] < l2[pos2][0]:
+            pos1 += 1
+        elif l1[pos1][0] > l2[pos2][0]:
+            pos2 += 1
+        else:
+            aux.append(l1[pos1][1] * l2[pos2][1])
+            pos1 += 1
+            pos2 += 1
+    return aux
 
 
 def doc_count(client, index):
@@ -156,11 +176,11 @@ def doc_count(client, index):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--index', default='proba', required=False, help='Index to search')
-    parser.add_argument('--files', default=['docs/d3.txt', 'docs/d4.txt'], required=False, nargs=2, help='Paths of the files to compare')
+    parser.add_argument('--files', default=['docs/d3.txt', 'docs/d4.txt'], required=False, nargs=2,
+                        help='Paths of the files to compare')
     parser.add_argument('--print', default=True, action='store_true', help='Print TFIDF vectors')
 
     args = parser.parse_args()
-
 
     index = args.index
 
@@ -174,7 +194,7 @@ if __name__ == '__main__':
         # Get the files ids
         file1_id = search_file_by_path(client, index, file1)
         file2_id = search_file_by_path(client, index, file2)
-        
+
         # Compute the TF-IDF vectors
         file1_tw = toTFIDF(client, index, file1_id)
         file2_tw = toTFIDF(client, index, file2_id)
@@ -182,13 +202,12 @@ if __name__ == '__main__':
         if args.print:
             print(f'TFIDF FILE {file1}')
             print_term_weight_vector(file1_tw)
-            print ('---------------------')
+            print('---------------------')
             print(f'TFIDF FILE {file2}')
             print_term_weight_vector(file2_tw)
-            print ('---------------------')
+            print('---------------------')
 
         print(f"Similarity = {cosine_similarity(file1_tw, file2_tw):3.5f}")
 
     except NotFoundError:
         print(f'Index {index} does not exist')
-
