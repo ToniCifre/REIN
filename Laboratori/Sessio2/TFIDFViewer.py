@@ -127,8 +127,7 @@ def cosine_similarity(tw1, tw2):
     :param tw2:
     :return:
     """
-    l = intersect(tw1, tw2)
-    return np.sum(l)
+    return np.sum(intersect(tw1, tw2))
     # simil = 0
     # for t, w in tw1:
     #     if t not in [t for t, _ in tw2]:
