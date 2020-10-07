@@ -27,7 +27,6 @@ def zipf_fit(frequency, dwnTrim, topTrim):
         rF.append(math.log10(i + 1))
 
     m = np.polyfit(rF, logF, 1)
-    print(m)
     alpha = -m[0]
     k = 10 ** m[1]
     return k, alpha

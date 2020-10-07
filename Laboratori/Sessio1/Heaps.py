@@ -12,9 +12,10 @@ def heaps(n, k, beta):
     return k * (n ** beta)
 
 
-index = 'inovels'  # inovels_1, inovels_2
+index = 'news' # 'inovels'  # inovels_1, inovels_2
 
 aux = [0]
+nWords = 0
 try:
     voc = {}
     client = Elasticsearch()
@@ -26,10 +27,11 @@ try:
                 for t in tv['term_vectors']['text']['terms']:
                     if t in voc:
                         voc[t] += tv['term_vectors']['text']['terms'][t]['term_freq']
-                        aux.append(aux[-1])
+                        aux.append(nWords)
                     else:
                         voc[t] = tv['term_vectors']['text']['terms'][t]['term_freq']
-                        aux.append(aux[-1] + 1)
+                        nWords += 1
+                        aux.append(nWords)
         except TransportError:
             pass
 
@@ -38,14 +40,13 @@ except NotFoundError:
     exit(1)
 
 ranks = np.arange(1., len(aux) + 1)
-ranks2 = np.arange(1., 260000)
 
 popt, pcov = curve_fit(heaps, ranks, aux)
 
 plt.plot(ranks, aux, 'b-', label=f'Real Data')
-plt.plot(ranks2, heaps(ranks2, *popt), 'y-', label=f'fit k={round(popt[0], 2)}, beta={round(popt[1], 2)}')
+plt.plot(ranks, heaps(ranks, *popt), 'y-', label=f'fit k={round(popt[0], 2)}, beta={round(popt[1], 2)}')
 
-plt.plot(ranks2, ranks2, 'r-')
+plt.plot(ranks, ranks, 'r-')
 
 plt.title('HEAPS')
 plt.legend()

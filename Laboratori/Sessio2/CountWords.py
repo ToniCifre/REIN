@@ -14,11 +14,10 @@ CountWords
 
 """
 
+from __future__ import print_function
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import scan
 from elasticsearch.exceptions import NotFoundError, TransportError
-
-from commons import *
 
 import argparse
 
@@ -34,7 +33,7 @@ if __name__ == '__main__':
     try:
         client = Elasticsearch()
         voc = {}
-        sc = scan(client, index=index, query={"query": {"match_all": {}}})
+        sc = scan(client, index=index, query={"query" : {"match_all": {}}})
         for s in sc:
             try:
                 tv = client.termvectors(index=index, id=s['_id'], fields=['text'])
@@ -46,22 +45,15 @@ if __name__ == '__main__':
                             voc[t] = tv['term_vectors']['text']['terms'][t]['term_freq']
             except TransportError:
                 pass
-
         lpal = []
+
         for v in voc:
             lpal.append((v.encode("utf-8", "ignore"), voc[v]))
 
-        csv_rowlist = []
-        total_words = 0
-        for pal, cnt in sorted(lpal, key=lambda x: x[0 if args.alpha else 1], reverse=True):
-            csv_rowlist.append([cnt, pal.decode("utf-8")])
-            total_words += cnt
 
+        for pal, cnt in sorted(lpal, key=lambda x: x[0 if args.alpha else 1]):
+            print(f'{cnt}, {pal.decode("utf-8")}')
         print('--------------------')
-        print(f'Different {len(lpal)} Words')
-        print(f'{total_words} Total Words')
-
-        write_csv(csv_rowlist, "CountWords")
-
+        print(f'{len(lpal)} Words')
     except NotFoundError:
-        print(f'Index {index} does not exists')
+        print(f'Index {index} does not exist')
