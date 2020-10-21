@@ -92,7 +92,6 @@ def toTFIDF(client, index, file_id):
     tfidfw = []
     for (t, w), (_, df) in zip(file_tf, file_df):
         tfidfw.append((t, (w / max_freq) * math.log2(dcount / df)))
-    print(tfidfw)
     return normalize(tfidfw)
 
 
@@ -116,7 +115,8 @@ def print_term_weight_vector(twv):
     :param twv:
     :return:
     """
-    print(twv)
+    for row in twv:
+        print(f'Terme: {row[0]}\t Pes: {row[1]}')
 
 
 def cosine_similarity(tw1, tw2):
@@ -128,21 +128,6 @@ def cosine_similarity(tw1, tw2):
     :return:
     """
     return np.sum(intersect(tw1, tw2))
-    # simil = 0
-    # for t, w in tw1:
-    #     if t not in [t for t, _ in tw2]:
-    #         print('polla')
-    #         tw2.append((t, 0))
-    # for t, w in tw2:
-    #     if t not in [t for t, _ in tw1]:
-    #         tw1.append((t, 0))
-    # tw1 = sorted(tw1, key=lambda x: x[0])
-    # tw2 = sorted(tw2, key=lambda x: x[0])
-    # print(tw1)
-    # print(tw2)
-    # for (_, w1), (_, w2) in zip(tw1, tw2):
-    #     simil += w1 * w2
-    # return simil
 
 
 def intersect(l1, l2):
@@ -185,7 +170,6 @@ if __name__ == '__main__':
 
     file1 = args.files[0]
     file2 = args.files[1]
-    print(args.files)
 
     client = Elasticsearch()
 
