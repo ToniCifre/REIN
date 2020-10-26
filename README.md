@@ -1,4 +1,4 @@
-# REIN
+# rECUPERACIÓN DE LA INFORMACIÓN
 Assignatura RECUPERACIÓ DE LA INFORMACIÓ de la EPSEVG
 
 ## Instruciones:
