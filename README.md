@@ -4,10 +4,10 @@ Assignatura RECUPERACIÓ DE LA INFORMACIÓ de la EPSEVG
 ## Instruciones:
 Per poder executar de manera correcta cadascuna de les sessions de laboratori, cal establir la carpeta de la sessió com 'source root' per poder llegir de manera correcta cadascuna de les dependencies.
 ## Sessions del laboratori:
-- [Sessio 1](#dades-entrades)
+- [Sessio 1](#Sessió-1:-ElasticSearch-i-les-lleis-de-Zipf-i-Heaps)
 
 
-### Sessió 1 ElasticSearch i les lleis de Zipf i Heaps 
+### Sessió 1: ElasticSearch i les lleis de Zipf i Heaps
 
 ####Abstract
 Per aquesta sessió de laboratori ens hem dedicat a aplicar i comprovar les lleis de *Zipf* i *Heaps* amb l’us de 
