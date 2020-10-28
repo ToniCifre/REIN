@@ -5,7 +5,7 @@ Assignatura RECUPERACIÓ DE LA INFORMACIÓ de la EPSEVG
 Per poder executar de manera correcta cadascuna de les sessions de laboratori, cal establir la carpeta de la sessió com 'source root' per poder llegir de manera correcta cadascuna de les dependencies.
 ## Sessions del laboratori:
 - [Sessió 1](#sessió-1-elasticsearch-i-les-lleis-de-zipf-i-heaps)
-- [Sessió 2](#sessió-2-efectes-sobre-l-index)
+- [Sessió 2](#sessió-2-efectes-sobre-lindex)
 
 
 ## Sessió 1: ElasticSearch i les lleis de Zipf i Heaps
@@ -152,7 +152,7 @@ la llei i obtindre quantes paraules diferents esperem obtenir a partir d’un co
 
 
 
-## Sessio 2: Efectes sobre l’index
+## Sessió 2: Efectes sobre l’index
 
 Al realitzar la tokenitzaciò de paraules de diverses maneres (separant per espais en blanc, caràcters que no son lletres, etc..) ens resulta l’augment de paraules que ja es trobaven al nostre sistema (mots compostos). Conjuntament amb el filtratge que hem realitzat posteriorment on hem normalitzat tot el text (passant-ho tot a minúscules) i hem realitzar un *stemming* (extreure d’un terme la seva arrel i guardar ho) hem pogut evitar moltes paraules derivades d’una mateixa (per exemple, pont, pontet, pertanyen a una mateixa arrel pont) reduint aixi la mida del index a més d’una possible disminució dels mots amb faltes ortogràfiques (sobretot al final de la paraula).
 
