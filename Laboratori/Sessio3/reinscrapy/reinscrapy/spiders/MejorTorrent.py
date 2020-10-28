@@ -1,6 +1,5 @@
 import scrapy
 from scrapy.selector import Selector
-import re
 
 
 class MejortorrentSpider(scrapy.Spider):
@@ -17,13 +16,13 @@ class MejortorrentSpider(scrapy.Spider):
         :return:
         """
 
-        for box in response.css('td.main_table_center_content_td'):
-            for films in box.css('a::attr(href)').getall():
+        for box in response.css('td.main_table_center_content_td')[1:2]:
+            for films in box.css('a::attr(href)').getall()[1:2]:
                 doc = {}
                 link = response.urljoin(films)
                 yield scrapy.Request(link, callback=self.parse_detail, meta=doc)
 
-        if self.n_page < 20:
+        if self.n_page < 10:
             self.n_page += 1
             next_page = response.urljoin(f'secciones.php?sec=descargas&ap=peliculas&p={self.n_page}')
             yield scrapy.Request(next_page, callback=self.parse)
@@ -42,14 +41,17 @@ class MejortorrentSpider(scrapy.Spider):
         aux = [str(k).replace('\n', '').replace('\t', '').replace('\r', '').lstrip() for k in sel.css('*::text').getall()]
         aux = [k for k in aux if k != '']
 
-        doc = response.meta
+        filter = ['Género', 'Año', 'Director', 'Actores', 'Formato', 'Total Descargas', 'Fecha', 'Tamaño', 'Descripción']
         toni = 'title'
+        doc = response.meta
         for t in aux:
             if toni != '':
                 doc[toni] = t
                 toni = ''
             elif ':' in t:
-                toni = t.replace(':', '')
+                toni = t.replace(':', '').replace(' ', '')
+                if toni not in filter:
+                    toni = ''
 
         yield scrapy.Request(response.urljoin(sel.css('a::attr(href)').getall()[0]), callback=self.parse_torrent, meta=doc)
 
