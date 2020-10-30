@@ -60,13 +60,13 @@ Un cop obtingudes els valors de *aplha* i *k* amb la funció prèviament descrit
 variant la quantitat que hem retallat al fer el calcul. Com podeu observar a les figures adjuntades al text, hem oscil·lat
  entre uns valors de 1-2 % per als mots en una major nombre d’aparicions i un 30-40% per als termes més inferiors.
 
-![Línies de regressió comparades](https://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Zipf/danis-fit.png "Línies de regressió comparades")
+![Línies de regressió comparades](Laboratori/Sessio1/Plots/Zipf/danis-fit.png "Línies de regressió comparades")
 
 A més hem aportat imatges on no hem aplicat el preprocesament. Com podeu observar, la separació de punts als dos extrems
  de la funció es molt gran, a més si ens fixem en mes detall, podem observar que a la part inferior de la gràfica podem 
  veure una quantitat molt gran de mots amb una freqüència molt pareguda, per no dir igual.
 
-![Zipf sense preprocesament](https://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Zipf/no_clean.png "Zipf sense preprocesament")
+![Zipf sense preprocesament](Laboratori/Sessio1/Plots/Zipf/no_clean.png "Zipf sense preprocesament")
 
 Per últim hem generat una nova gràfica amb la funció *curvy\_fit* i l’hem comparat amb una de les funcions prèvies que 
 trobem que més s’ajusta a la real.
@@ -75,7 +75,7 @@ En el nostre cas, hem triat la funció que retallem un 1% dels superiors amb un 
 Com podem observar, la nostra recta s’aproxima molt millor a la funció descrita per el conjunt que no pas la generada 
 per *curvy\_fit*
 
-![Fit comparada amb la nostra](https://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Zipf/Clean_Words.png "Fit comparada amb la nostra")
+![Fit comparada amb la nostra](Laboratori/Sessio1/Plots/Zipf/Clean_Words.png "Fit comparada amb la nostra")
 
 ### Conclusions
 
@@ -122,21 +122,21 @@ F = k * N^beta
 Al obtenir les prediccions de *k* i *beta* podem observar si la curava resultant s’ajusta a la realitat, per a fer
  aquesta comprovació representarem gràficament els resultats obtinguts per a comprovar visualment la validesa dels resultats.
 
-![Resultat del anàlisis del subconjunt 1](https://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Heaps/1.png "Resultat del anàlisis del subconjunt 1")
+![Resultat del anàlisis del subconjunt 1Laboratori/Sessio1/Plots/Heaps/1.png "Resultat del anàlisis del subconjunt 1")
 
-![Resultat del anàlisis del subconjunt 2](https://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Heaps/2.png "Resultat del anàlisis del subconjunt 2")
+![Resultat del anàlisis del subconjunt 2](Laboratori/Sessio1/Plots/Heaps/2.png "Resultat del anàlisis del subconjunt 2")
 
 Com es pot observar, en la figura1 respecte a la figura2, el *beta* es de poques 
 centèsimes més elevat que en el segon subconjunt, una diferencia molt baixa, es a dir que podem veure com la corba 
 s’ajusta al resultats reals obtinguts.
 
-![Resultat del anàlisis del conjunt complet](https://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Heaps/all.png "Resultat del anàlisis del conjunt complet")
+![Resultat del anàlisis del conjunt complet](Laboratori/Sessio1/Plots/Heaps/all.png "Resultat del anàlisis del conjunt complet")
 
 Si extrapolem el resultat de les dues figures anteriors i els anem ajuntant paraula per paraula podem veure com el 
 resultat obtingut del conjunt complet de novel·les s’ajunta a es prediccions obtingudes anteriorment de *k* i *beta*,
  de tal forma que podem acceptar i prendre com a bones aplicant un petit factor d’error.
 
-![Resultat del anàlisis del conjunt complet de Noticies](Lahttps://github.com/ToniCifre/REIN/tree/master/Laboratori/Sessio1/Plots/Heaps/20_news.png "Resultat del anàlisis del conjunt complet de Noticies")
+![Resultat del anàlisis del conjunt complet de Noticies](Laboratori/Sessio1/Plots/Heaps/20_news.png "Resultat del anàlisis del conjunt complet de Noticies")
 
 Pes a poder donar com a valid el nostres resultats hem realitzat un nou estudi sobre un conjunt diferent i amb un major
  nombre de paraules. El resultat dels valor *k* i *beta* aconseguit amb el nou conjunt son molts semblants als valors 
