@@ -122,7 +122,7 @@ F = k * N^beta
 Al obtenir les prediccions de *k* i *beta* podem observar si la curava resultant s’ajusta a la realitat, per a fer
  aquesta comprovació representarem gràficament els resultats obtinguts per a comprovar visualment la validesa dels resultats.
 
-![Resultat del anàlisis del subconjunt 1Laboratori/Sessio1/Plots/Heaps/1.png "Resultat del anàlisis del subconjunt 1")
+![Resultat del anàlisis del subconjunt 1](Laboratori/Sessio1/Plots/Heaps/1.png "Resultat del anàlisis del subconjunt 1")
 
 ![Resultat del anàlisis del subconjunt 2](Laboratori/Sessio1/Plots/Heaps/2.png "Resultat del anàlisis del subconjunt 2")
 
