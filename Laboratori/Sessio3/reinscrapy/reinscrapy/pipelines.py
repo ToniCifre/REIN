@@ -1,16 +1,3 @@
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-
-# useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
-
-
-class ReinscrapyPipeline:
-    def process_item(self, item, spider):
-        return item
 # -*- coding: utf-8 -*-
 
 # Define your item pipelines here
@@ -18,18 +5,25 @@ class ReinscrapyPipeline:
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+# from itemadapter import ItemAdapter
+
+class ReinscrapyPipeline:
+    def process_item(self, item, spider):
+        return item
+
+
 from elasticsearch import Elasticsearch
 
 from elasticsearch.exceptions import NotFoundError
 from elasticsearch_dsl import Index, analyzer, tokenizer
 
-class ReinscrapyElasticPipeline(object):
 
+class ReinscrapyElasticPipeline(object):
     collection_name = 'scrapy'
 
     def __init__(self):
         self.elastic_uri = 'http://localhost:9200/'
-        self.elastic_db = 'scrapy'
+        self.elastic_db = 'scrapySensaCine'
 
     def open_spider(self, spider):
 
@@ -45,8 +39,8 @@ class ReinscrapyElasticPipeline(object):
         ind.close()
         # Configure tokenizer
         my_analyzer = analyzer('default', type='custom',
-            tokenizer=tokenizer('standard'),
-            filter=['lowercase', 'asciifolding'])
+                               tokenizer=tokenizer('standard'),
+                               filter=['lowercase', 'asciifolding'])
         ind.analyzer(my_analyzer)
         ind.save()
         ind.open()
@@ -55,6 +49,5 @@ class ReinscrapyElasticPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.client.index(index=self.elastic_db, doc_type='TFG', body=dict(item))
-
+        self.client.index(index=self.elastic_db, doc_type='SensaCine', body=dict(item))
         return item

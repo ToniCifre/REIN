@@ -46,10 +46,15 @@ if __name__ == '__main__':
         #print("response:", response)
 
         for r in response:
-            print('DATE= %s URL=%s' % (r['date'], r['url']))
-            print('AUTHOR= %s' % r['author'])
-            print('TITLE= %s' % r['title'])
-            print('KEYWORDS= %s' % r['keywords'])
+            # print('DATE= %s URL=%s' % (r['date'], r['url']))
+            # print('AUTHOR= %s' % r['author'])
+            # print('TITLE= %s' % r['title'])
+            # print('KEYWORDS= %s' % r['keywords'])
+            print(f'Titulo: {r["Titulo"]}')
+            print(f'Género: {r["Género"]}')
+            print(f'Actores: {r["Actores"]}')
+            print(f'Descripción:\n {r["Descripción"]}')
+            print(f'Link Descarga = {r["download"]}')
             print('----------------------------------------')
 
 

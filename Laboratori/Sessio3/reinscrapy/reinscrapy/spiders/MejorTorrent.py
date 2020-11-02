@@ -16,6 +16,7 @@ class MejortorrentSpider(scrapy.Spider):
         :return:
         """
         print(f'[INFO]: Number of page {self.n_page}')
+
         for box in response.css('td.main_table_center_content_td'):
             for films in box.css('a::attr(href)').getall():
                 link = response.urljoin(films)
@@ -26,8 +27,7 @@ class MejortorrentSpider(scrapy.Spider):
             next_page = response.urljoin(f'secciones.php?sec=descargas&ap=peliculas&p={self.n_page}')
             yield scrapy.Request(next_page, callback=self.parse)
         else:
-            print('-----------------------------------')
-            print(response.request.url.split('='), self.n_page)
+            print('-------------- End Of Scraper --------------')
 
     def parse_film_detail(self, response):
         """
@@ -45,7 +45,7 @@ class MejortorrentSpider(scrapy.Spider):
 
         info_list = ['Género', 'Año', 'Director', 'Actores', 'Formato',
                      'Total Descargas', 'Fecha', 'Tamaño', 'Descripción']
-        info_title = 'title'
+        info_title = 'Titulo'
         for data in aux:
             if info_title != '':
                 doc[info_title] = data
@@ -54,6 +54,8 @@ class MejortorrentSpider(scrapy.Spider):
                 info_title = data.replace(':', '').replace(' ', '')
                 if info_title not in info_list:
                     info_title = ''
+
+        print(f'\t- [INFO]: Film in page {doc["Titulo"]}')
 
         yield scrapy.Request(response.urljoin(sel.css('a::attr(href)').getall()[0]),
                              callback=self.parse_torrent, meta=doc)
