@@ -1,29 +1,31 @@
 # -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 # from itemadapter import ItemAdapter
+from elasticsearch import Elasticsearch
+
+from elasticsearch.exceptions import NotFoundError
+from elasticsearch_dsl import Index, analyzer, tokenizer
+from elasticsearch.helpers import bulk
+
 
 class ReinscrapyPipeline:
     def process_item(self, item, spider):
         return item
 
 
-from elasticsearch import Elasticsearch
-
-from elasticsearch.exceptions import NotFoundError
-from elasticsearch_dsl import Index, analyzer, tokenizer
-
-
 class ReinscrapyElasticPipeline(object):
-    collection_name = 'scrapy'
+    collection_name = 'scrapy-sensacine'
 
     def __init__(self):
         self.elastic_uri = 'http://localhost:9200/'
-        self.elastic_db = 'scrapySensaCine'
+        self.elastic_db = 'scrapy-sensacine'
+
+        self.ldocs = []
+        self.n_docs = 500
+        self.index_dic = {'_op_type': 'index', '_index': self.elastic_db, '_type': 'SensaCine'}
+
 
     def open_spider(self, spider):
 
@@ -49,5 +51,14 @@ class ReinscrapyElasticPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.client.index(index=self.elastic_db, doc_type='SensaCine', body=dict(item))
+        self.ldocs.append({**self.index_dic, **item})
+
+        if len(self.ldocs) > self.n_docs:
+            print('[INFO] Indexing ...', end='')
+
+            bulk(self.client, self.ldocs)
+            self.ldocs.clear()
+
+            print('    [OK]')
+
         return item
