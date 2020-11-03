@@ -62,8 +62,8 @@ def search_sensacine():
         for r in response:
             print(f'\n----- {r["Titulo"]} -------------------------')
             print(f'Género: {r["Género"]}')
-            if 'Director ' in r: print(f'Director = {r["Director "]}')
-            if 'Reparto' in r: print(f'Reparto: {r["Reparto"]}')
+            print(f'Director: {r["Director"]}')
+            print(f'Reparto: {r["Reparto"]}')
             print(f'Puntuación: {r["SensaCine"]} / {r["Medios"]} / {r["Usuarios"]}')
             print(f'Sinopsis:\n {r["Sinopsis"]}')
             print('=================================================')

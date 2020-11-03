@@ -1,3 +1,37 @@
+BOT_NAME = 'reinscrapy'
+
+SPIDER_MODULES = ['reinscrapy.spiders']
+NEWSPIDER_MODULE = 'reinscrapy.spiders'
+
+# ROBOTSTXT_OBEY = False # Need for MejorTorrent
+
+CONCURRENT_REQUESTS = 32
+
+COOKIES_ENABLED = False
+
+ITEM_PIPELINES = {
+   # 'reinscrapy.pipelines.ReinscrapyPipeline': 300,
+   'reinscrapy.pipelines.MejorTorrentElasticPipeline': 300,
+   # 'reinscrapy.pipelines.ReinscrapyElasticPipeline': 300,
+}
+
+FEED_EXPORT_ENCODING = 'utf-8'
+LOG_LEVEL = 'INFO'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Scrapy settings for reinscrapy project
 #
 # For simplicity, this file contains only settings considered important or
@@ -6,11 +40,11 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+#
+# BOT_NAME = 'reinscrapy'
 
-BOT_NAME = 'reinscrapy'
-
-SPIDER_MODULES = ['reinscrapy.spiders']
-NEWSPIDER_MODULE = 'reinscrapy.spiders'
+# SPIDER_MODULES = ['reinscrapy.spiders']
+# NEWSPIDER_MODULE = 'reinscrapy.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -20,7 +54,7 @@ NEWSPIDER_MODULE = 'reinscrapy.spiders'
 # ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 32
+# CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -31,7 +65,7 @@ CONCURRENT_REQUESTS = 32
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED = False
+# COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -62,10 +96,11 @@ COOKIES_ENABLED = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
+# ITEM_PIPELINES = {
    # 'reinscrapy.pipelines.ReinscrapyPipeline': 300,
-   'reinscrapy.pipelines.ReinscrapyElasticPipeline': 300,
-}
+   # 'reinscrapy.pipelines.MejorTorrentElasticPipeline': 300,
+   # 'reinscrapy.pipelines.ReinscrapyElasticPipeline': 300,
+# }
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
@@ -86,5 +121,5 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-FEED_EXPORT_ENCODING = 'utf-8'
-LOG_LEVEL = 'INFO'
+# FEED_EXPORT_ENCODING = 'utf-8'
+# LOG_LEVEL = 'INFO'
