@@ -40,6 +40,7 @@ def search_mejortorrent():
             print(f'Género: {r["Género"]}')
             print(f'Actores: {r["Actores"]}')
             print(f'Formato: {r["Formato"]}')
+            print(f'Tamaño:\n {r["Tamaño"]}')
             print(f'Descripción:\n {r["Descripción"]}')
             print(f'Link Descarga = {r["download"]}')
             print('=================================================')
@@ -64,7 +65,8 @@ def search_sensacine():
             print(f'Género: {r["Género"]}')
             print(f'Director: {r["Director"]}')
             print(f'Reparto: {r["Reparto"]}')
-            print(f'Puntuación: {r["SensaCine"]} / {r["Medios"]} / {r["Usuarios"]}')
+            print(f'Puntuación: {r["SensaCine"]} / {r["Medios"]} '
+                  f'/ {r["Usuarios"]}')
             print(f'Sinopsis:\n {r["Sinopsis"]}')
             print('=================================================')
 

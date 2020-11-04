@@ -27,8 +27,8 @@ class MejorTorrentElasticPipeline(object):
         self.index_dic = {'_op_type': 'index', '_index': self.elastic_db, '_type': 'MejorTorrent'}
 
     def open_spider(self, spider):
-        ind = Index(self.elastic_db, using=self.client)
         try:
+            ind = Index(self.elastic_db, using=self.client)
             # Drop index if it exists
             ind.delete()
         except NotFoundError:
@@ -81,8 +81,8 @@ class SensaCineElasticPipeline(object):
         self.index_dic = {'_op_type': 'index', '_index': self.elastic_db, '_type': 'SensaCine'}
 
     def open_spider(self, spider):
-        ind = Index(self.elastic_db, using=self.client)
         try:
+            ind = Index(self.elastic_db, using=self.client)
             # Drop index if it exists
             ind.delete()
         except NotFoundError:
