@@ -62,7 +62,7 @@ def readAirports(fd):
             a.name = temp[1][1:-1] + ", " + temp[3][1:-1]
             a.code = temp[4][1:-1]
             a.index = cont
-        except Exception as inst:
+        except Exception:
             pass
         else:
             cont += 1
@@ -80,7 +80,7 @@ def getAirport(code):
     try:
         if code not in airportHash:
             raise Exception("Airport not found.")
-    except Exception as inst:
+    except Exception:
         pass
     else:
         return airportList[airportHash[code].index]
@@ -96,12 +96,11 @@ def readRoutes(fd):
     '''
     print(f'Reading Routes file from {fd}')
 
-    # write your code
     f = codecs.open(fd, "r", encoding="cp1252", errors="ignore")
+    n_conn = 0
     for line in f.readlines():
         _, _, origin, _, desti, _, _, _, _ = line.split(',')
         if len(origin) == 3 and len(desti) == 3:
-            # Procedirem a la busqueda dins dels nostres aeroports
             if desti in airportHash and origin in airportHash:
                 desti = airportHash[desti]
                 if origin in desti.routeHash:
@@ -111,52 +110,48 @@ def readRoutes(fd):
                     desti.routeHash[origin] = len(desti.routes) - 1
 
                 airportHash[origin].outweight += 1
+                n_conn += 1
 
     f.close()
-    Sum = 0
-    for k in airportHash.keys():
-        Sum += sum([i.weight for i in airportHash[k].routes])
-    print(f'k = {k}  len = {Sum}')
+    print(f'Number of connections: {n_conn}')
 
-from decimal import Decimal
-def computePageRanks():
+
+def computePageRanks(L=.8, maxerr=.0001):
     '''
     Iterative method for computing PageRank values.
     '''
-    n = len(airportList)
-    L = 0.9
-    P = np.ones(n) / n
+    n_airports = len(airportList)
+    P = np.ones(n_airports) / n_airports
 
     z = [z.index for z in airportList if len(z.routes) == 0]
-    d = (1 - L) / n
-    print(len(z))
-    # flag = True
-    # while flag:
-    for fdsf in range(100):
-        Q = np.zeros(n)
-        suma_z = sum(P[z])
+
+    n_iter = 0
+    flag = True
+    while flag:
+        Q = np.zeros(n_airports)
+        z_sum = sum(P[z])
 
         for a in airportList:
-            suma = sum(P[airportHash[b.origin].index] * b.weight / airportHash[b.origin].outweight for b in a.routes)
-            # Q[a.index] = Decimal(L * (suma + Decimal(suma_z) / Decimal(n)) + d)
-            Q[a.index] = L * suma + (1-L + L*suma_z) / n
-        P = Q
+            r_sum = sum(P[airportHash[r.origin].index] * r.weight / airportHash[r.origin].outweight for r in a.routes)
+            Q[a.index] = L * r_sum + (1 - L + L * z_sum) / n_airports
+            # Q[a.index] = Decimal(L * (suma + Decimal(z_sum) / Decimal(n_airports)) + d)
 
-    for a in airportList:
-        a.rank = P[a.index]
+        # print(f'Sum of PageRank: {sum(Q)}')
+        flag = np.sum(np.abs(Q - P)) > maxerr
+        P = Q
+        n_iter += 1
+
+    return P, n_iter
 
 
 def outputPageRanks():
     '''
     Print the list of (pagerank, airport name) in descending order by pagerank.
     '''
-    rank_sum = 0
-    t = PrettyTable(['Airport', 'Ranck'])
-    for a in airportList:
-        t.add_row([a.name, a.rank])
-        rank_sum += a.rank
-    print(t.get_string(sortby="Ranck", reversesort=True))
-    print(f'Total PageRank Sum: {rank_sum}')
+    t = PrettyTable(['N', 'Airport', 'Ranck'])
+    for index, a in enumerate(sorted(airportList, reverse=True), start=1):
+        t.add_row([index, a.name, a.rank])
+    print(t)
 
 
 def main():
@@ -164,11 +159,16 @@ def main():
     readRoutes("routes.txt")
 
     time1 = time.time()
-    iterations = computePageRanks()
+    P, n_iter = computePageRanks(0.8)
     time2 = time.time()
+
+    for a in airportList:
+        a.rank = P[a.index]
+
     outputPageRanks()
 
-    print(f'#Iterations: {iterations}')
+    print(f'Total PageRank Sum: {sum(P)}')
+    print(f'Iterations: {n_iter}')
     print(f'Time of computePageRanks(): {time2 - time1}')
 
 
