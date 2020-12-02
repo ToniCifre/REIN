@@ -1,9 +1,10 @@
 """
 MRMarketBasket1
 """
+import itertools
+
 from mrjob.job import MRJob
 from mrjob.step import MRStep
-from itertools import groupby
 
 
 class MRMarketBasket1(MRJob):
@@ -15,24 +16,23 @@ class MRMarketBasket1(MRJob):
         :return:
         """
         super(MRMarketBasket1, self).configure_args()
-        # self.add_file_arg('--file', )
 
     def mapper(self, _, line):
         """
         This is the mapper, it should generate pairs of items
         :param line: contains a transaction
         """
-        trans = line.strip().split(',')
-
-        for key, group in groupby(trans):
-            yield key, len(list(group))
+        trans = list(line.strip().split(','))
+        trans.sort(reverse=True)
+        for i in range(len(trans) - 1):
+            for t in range(i + 1, len(trans)):
+                yield f'{trans[i]}#{trans[t]}', 1
 
     def reducer(self, key, values):
         """
         Input is a pair of items as key and all the countings it has assigned
         Output should be at least a pair (key, new counting)
         """
-
         yield key, sum(values)
 
     def steps(self):

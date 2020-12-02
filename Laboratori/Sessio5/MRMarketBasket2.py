@@ -22,10 +22,7 @@ class MRMarketBasket2(MRJob):
         :param line: contains a transaction
         """
         # Each line is a string a,b,c
-        trans = line.strip().split(',')
-        # for key, group in groupby(trans):
-        #     yield key, len(list(group))
-        for t in trans:
+        for t in line.strip().split(','):
             yield t, 1
 
     def reducer(self, key, values):
