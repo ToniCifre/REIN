@@ -25,6 +25,9 @@ class MRMarketBasket2(MRJob):
         for t in line.strip().split(','):
             yield t, 1
 
+    def combiner(self, key, values):
+        yield key, sum(values)
+
     def reducer(self, key, values):
         """
         Input is an item as key and all the countings it has assigned
@@ -33,7 +36,7 @@ class MRMarketBasket2(MRJob):
         yield key, sum(values)
 
     def steps(self):
-        return [MRStep(mapper=self.mapper, reducer=self.reducer)]
+        return [MRStep(mapper=self.mapper, combiner=self.combiner, reducer=self.reducer)]
 
 
 if __name__ == '__main__':

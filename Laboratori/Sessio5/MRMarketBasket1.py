@@ -28,6 +28,9 @@ class MRMarketBasket1(MRJob):
             for t in range(i + 1, len(trans)):
                 yield f'{trans[i]}#{trans[t]}', 1
 
+    def combiner(self, key, values):
+        yield key, sum(values)
+
     def reducer(self, key, values):
         """
         Input is a pair of items as key and all the countings it has assigned
@@ -36,7 +39,7 @@ class MRMarketBasket1(MRJob):
         yield key, sum(values)
 
     def steps(self):
-        return [MRStep(mapper=self.mapper, reducer=self.reducer)]
+        return [MRStep(mapper=self.mapper, combiner=self.combiner, reducer=self.reducer)]
 
 
 if __name__ == '__main__':
