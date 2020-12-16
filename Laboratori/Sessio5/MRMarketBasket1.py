@@ -1,7 +1,6 @@
 """
 MRMarketBasket1
 """
-import itertools
 
 from mrjob.job import MRJob
 from mrjob.step import MRStep

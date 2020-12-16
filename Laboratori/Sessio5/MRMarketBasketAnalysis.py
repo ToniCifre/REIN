@@ -61,7 +61,8 @@ if __name__ == '__main__':
     pairs['conf1'] = pairs.suma / pairs.key1.map(singles)
     pairs['conf2'] = pairs.suma / pairs.key2.map(singles)
 
-    # print(pairs.sort_values(['suma'], ascending=[False]).head(20))
+    print(pairs.sort_values(by=['conf1','support'], ascending=[False,False]).head(5))
+    print(pairs.sort_values(by=['conf2','support'], ascending=[False,False]).head(5))
 
     print("******************************************************************************* ")
     print("************ Values and rules to fill the required table ********************** ")
