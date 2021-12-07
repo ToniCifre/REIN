@@ -1,16 +1,16 @@
 # REIN Laboratori 3
 
-Per el nostre treball hem realitzat dos \textit{scrappers} complementaris, un que es dedica a realitzar la busca de pel·lícules d'una pagina web i un altre per trobar aquestes pel·lícules a una pagina de descarregues "poc legals", retornant aixi l'arxiu per la descarrega
+Per el nostre treball hem realitzat dos **scrappers** complementaris, un que es dedica a realitzar la busca de pel·lícules d'una pagina web i un altre per trobar aquestes pel·lícules a una pagina de descarregues "poc legals", retornant aixi l'arxiu per la descarrega
 
 Per el primer rastrejador l'hem anomenat Sensacine - Scrappy, donat que actua a la pagina web anomenada, mentres que el segon, l'hem anomenat MejorTorrent - Scrappy per el mateix motiu
 
 ## Sensacine
 
 ### Objectiu
-El nostre objectiu a l'hora de plantejar el rastrejador es obtenir les pel·lícules de la pagina web \verb|www.sensacine.com| per poder així realitzar consultes per poder obtenir el titul d'aquestes, l'autor, els actors principals, les valoracions, etc..
+El nostre objectiu a l'hora de plantejar el rastrejador es obtenir les pel·lícules de la pagina web www.sensacine.com per poder així realitzar consultes per poder obtenir el titul d'aquestes, l'autor, els actors principals, les valoracions, etc..
 
 ### Modificaicons realitzades
-En primer lloc, per a poder optimitzar la velocitat en la qual es guarden els ítems recol·lectats pel nostre scraper, hem modificat la manera en la qual es guarden dintre de \verb|l'Elasticsearch|, de tal forma que hem evitat que és faig una petició cada cop que s'obté un document, sinó que hem creat una llista d'ítems, la qual es bolca a la nostra base de dades un cop te \verb|n| documents dintre, evitat que fer una petició cada vegada que recollim un ítem.
+En primer lloc, per a poder optimitzar la velocitat en la qual es guarden els ítems recol·lectats pel nostre scraper, hem modificat la manera en la qual es guarden dintre de **l'Elasticsearch**, de tal forma que hem evitat que és faig una petició cada cop que s'obté un document, sinó que hem creat una llista d'ítems, la qual es bolca a la nostra base de dades un cop te **n** documents dintre, evitat que fer una petició cada vegada que recollim un ítem.
 
 ```python
 class SensaCineElasticPipeline(object):
@@ -63,7 +63,6 @@ ITEM_PIPELINES = {
 ```
 
 Dintre d'aquest paràmetre, l'enter indica la prioritat d'execució, en el cas que es vulgui executar més d'un pipeline es pot indicar afegint la prioritat d'execució.
-\vspace{3mm}
 
 Per últim hem afegit dos paràmetres més de configuració, el primer és per indicar que la informació que recol·lecta'm i guardem es processi en 'UTF-8' per evitar que en recuperar-la es perdi o modifiqui, ja que en aquesta pàgina s'utilitza aquesta codificació. L'últim paràmetre indica que només mostrarà per consola la informació rellevant, per tal de poder seguir l'execució de forma correcta i no rebre massa informació irrellevant.
 ```python
@@ -72,7 +71,7 @@ LOG_LEVEL = 'INFO'
 ```
 
 \vspace{3mm}
-Per a poder observar el resultat, hem modificat l'arxiu \verb|SearchIndex.py|, afegint dues funcions, una per cercar i mostrar de forma adient la informació dels índexs de \verb|Sensacine| i \verb|MejorTorrent| depenent dels arguments introduïts per l'usuari, de tal forma que la funció per \verb|Sensacine| ens queda de la següent manera.
+Per a poder observar el resultat, hem modificat l'arxiu **SearchIndex.py**, afegint dues funcions, una per cercar i mostrar de forma adient la informació dels índexs de **Sensacine** i **MejorTorrent** depenent dels arguments introduïts per l'usuari, de tal forma que la funció per **Sensacine** ens queda de la següent manera.
 
 ```python
 def search_sensacine():
@@ -140,16 +139,16 @@ $ python SearchIndex.py --index scrapy-sensacine --query Medios:5
 ## MejorTorrent
 
 ### Objectiu
-La principal utilitat d'aquesta eina es la de recuperar links de descarrega per les pel·lícules de la pròpia pagina web. A més, al combinar els dos rastrejadors podem obtenir links de descarrega de pel·lícules que ens recomana el \textit{Sensacine} sense la necessitat d'entrar directament a la pagina, minimitzant aixi el risc donat que es una pagina poc segura.
+La principal utilitat d'aquesta eina es la de recuperar links de descarrega per les pel·lícules de la pròpia pagina web. A més, al combinar els dos rastrejadors podem obtenir links de descarrega de pel·lícules que ens recomana el **Sensacine** sense la necessitat d'entrar directament a la pagina, minimitzant aixi el risc donat que es una pagina poc segura.
 
 ### Modificacions
 Per a poder executar el scraper MejorTorrent hem hagut d'ajustar el fitxer settings.py, sumades a les anteriorment fetes pel scraper SensaCine, per a no ser detectes per la pàgina com un scraper maliciós, perquè, al ser detectats com a tal disposa d'un mecanisme per evitar l'extracció d'informació a través d'un rastrejador. 
 
-Per evitar ser detectat i bloquejats pel firewall, hem afegit un temps d'espera entre cada petició de dos segons en els setting afegint l'opció \verb|DOWNLOAD_DELAY = 2|.
+Per evitar ser detectat i bloquejats pel firewall, hem afegit un temps d'espera entre cada petició de dos segons en els setting afegint l'opció **DOWNLOAD_DELAY = 2**.
 
 Per altra banda, la pàgina, també disposa del document robot.txt per tal de fer la petició de no ser rastrejat al robot. En el nostre cas, a l'utilitzar la informació només per un estudi de classe, hem decidit no fer cas a la seva petició afegint l'opció \verb|ROBOTSTXT_OBEY = False| dels settings.
 
-Per últim hem creat una altra classe dintre del fitxer \verb|pipelines.py| de la mateixa forma que amb el scraper SensaCine però amb les modificacions pertinents de l'índex amb el qual és guarda't dintre de l'Elasticsearch.
+Per últim hem creat una altra classe dintre del fitxer **pipelines.py** de la mateixa forma que amb el scraper SensaCine però amb les modificacions pertinents de l'índex amb el qual és guarda't dintre de l'Elasticsearch.
 
 
 ### Problemes a l'implementació
