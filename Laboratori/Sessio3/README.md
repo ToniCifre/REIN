@@ -1,30 +1,15 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage{listings}
-
-
-
-\title{REIN Laboratori 3}
-\author{Daniel Beltrán Drago y Toni Cifré Vicens}
-\date{Novembre 2020}
-
-\begin{document}
-
-\maketitle
-\newpage
-\tableofcontents
-\newpage
+# REIN Laboratori 3
 
 Per el nostre treball hem realitzat dos \textit{scrappers} complementaris, un que es dedica a realitzar la busca de pel·lícules d'una pagina web i un altre per trobar aquestes pel·lícules a una pagina de descarregues "poc legals", retornant aixi l'arxiu per la descarrega
 
 Per el primer rastrejador l'hem anomenat Sensacine - Scrappy, donat que actua a la pagina web anomenada, mentres que el segon, l'hem anomenat MejorTorrent - Scrappy per el mateix motiu
 
-\section{Sensacine}
+## Sensacine
 
-\subsection{Objectiu}
+### Objectiu
 El nostre objectiu a l'hora de plantejar el rastrejador es obtenir les pel·lícules de la pagina web \verb|www.sensacine.com| per poder així realitzar consultes per poder obtenir el titul d'aquestes, l'autor, els actors principals, les valoracions, etc..
 
-\subsection{Modificaicons realitzades}
+### Modificaicons realitzades
 En primer lloc, per a poder optimitzar la velocitat en la qual es guarden els ítems recol·lectats pel nostre scraper, hem modificat la manera en la qual es guarden dintre de \verb|l'Elasticsearch|, de tal forma que hem evitat que és faig una petició cada cop que s'obté un document, sinó que hem creat una llista d'ítems, la qual es bolca a la nostra base de dades un cop te \verb|n| documents dintre, evitat que fer una petició cada vegada que recollim un ítem.
 
 \begin{lstlisting}[language=Python]
@@ -116,12 +101,12 @@ def search_sensacine():
 
 
 
-\subsection{Problemes a l'implementació}
+### Problemes a l'implementació
 A l'hora de realitzar l'implementació d'aquest rastrejador no hem tingut una gran quantitat de problemes, més enllà de entendre el codi de la pròpia pagina web. 
 
 Donat que l'estructura estava realment clarificada, el temps de realitzar l'anàlisi per saber com indicar els paràmetres que ens interessen guardar ha set pràcticament minúscul
 
-\subsection{Sortida del rastrejador}
+### Sortida del rastrejador
 Després de l'execució del nostre scraper, hem obtingut un total de 53106 documents (pel·lícules) amb un tamany de 47.5mb amb una velocitat mitjana de recol·lecció de 500 documents per minut.
 
 Per a veure un exemple sé sortida, podem buscar la pel·lícula Vengadores on aparegui l'actor Robert Deniro
@@ -154,12 +139,12 @@ $ python SearchIndex.py --index scrapy-sensacine --query Medios:5
 
 
 \newpage
-\section{MejorTorrent}
+## MejorTorrent
 
-\subsection{Objectiu}
+### Objectiu
 La principal utilitat d'aquesta eina es la de recuperar links de descarrega per les pel·lícules de la pròpia pagina web. A més, al combinar els dos rastrejadors podem obtenir links de descarrega de pel·lícules que ens recomana el \textit{Sensacine} sense la necessitat d'entrar directament a la pagina, minimitzant aixi el risc donat que es una pagina poc segura.
 
-\subsection{Modificacions}
+### Modificacions
 Per a poder executar el scraper MejorTorrent hem hagut d'ajustar el fitxer settings.py, sumades a les anteriorment fetes pel scraper SensaCine, per a no ser detectes per la pàgina com un scraper maliciós, perquè, al ser detectats com a tal disposa d'un mecanisme per evitar l'extracció d'informació a través d'un rastrejador. 
 
 Per evitar ser detectat i bloquejats pel firewall, hem afegit un temps d'espera entre cada petició de dos segons en els setting afegint l'opció \verb|DOWNLOAD_DELAY = 2|.
@@ -169,14 +154,14 @@ Per altra banda, la pàgina, també disposa del document robot.txt per tal de fe
 Per últim hem creat una altra classe dintre del fitxer \verb|pipelines.py| de la mateixa forma que amb el scraper SensaCine però amb les modificacions pertinents de l'índex amb el qual és guarda't dintre de l'Elasticsearch.
 
 
-\subsection{Problemes a l'implementació}
+### Problemes a l'implementació
 Per aquesta implementació hem tingut que ajustar paràmetres del propi SearchIndex, degut a que esta pagina contava amb un firewall, per augmentar el temps entre peticions per aixi no ser detectats.
 
 També remarcar que aquesta implementació ens a set més costos pel fet del mal estructurada que es trobava aquesta pagina, fent aixi una mol mala tant lectura com a implementació del nostre rastrejador
 
 Per ultim comentar, que degut al augment de temps entre peticions (forçat per la pròpia pagina web), tardem molt al realitzar l'execució, ralentitzant-nos aixi el flux de treball.
 
-\subsection{Sortida del rastrejador}
+### Sortida del rastrejador
 En aquest cas farem la mateixa consulta que amb SensaCine, però per obtenir els torrents disponibles de la pel·lícula dels Vengadores
 \begin{lstlisting}[language=bash]
 $ python SearchIndex.py --index scrapy --query Titulo:Vengadores AND
