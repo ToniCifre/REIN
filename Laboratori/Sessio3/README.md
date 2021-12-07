@@ -12,7 +12,7 @@ El nostre objectiu a l'hora de plantejar el rastrejador es obtenir les pel·líc
 ### Modificaicons realitzades
 En primer lloc, per a poder optimitzar la velocitat en la qual es guarden els ítems recol·lectats pel nostre scraper, hem modificat la manera en la qual es guarden dintre de \verb|l'Elasticsearch|, de tal forma que hem evitat que és faig una petició cada cop que s'obté un document, sinó que hem creat una llista d'ítems, la qual es bolca a la nostra base de dades un cop te \verb|n| documents dintre, evitat que fer una petició cada vegada que recollim un ítem.
 
-\begin{lstlisting}[language=Python]
+```python
 class SensaCineElasticPipeline(object):
     collection_name = 'scrapy-sensacine'
 
@@ -50,30 +50,31 @@ class SensaCineElasticPipeline(object):
             print('    [OK]')
 
         return item
-\end{lstlisting}
+```
 
 D'altra banda, per a poder aplicar aquest nou pipeline creat s'ha de modificar l'arxiu settings.py indicant quina de les classes dintre de l'arxiu s'ha d'utilitzar, aquesta indicació es fa amb el següent paràmetre:
 
-\begin{lstlisting}[language=Python]
+```
 ITEM_PIPELINES = {
    'reinscrapy.pipelines.MejorTorrentElasticPipeline': 300,
    # 'reinscrapy.pipelines.ReinscrapyPipeline': 300,
    # 'reinscrapy.pipelines.ReinscrapyElasticPipeline': 300,
 }
-\end{lstlisting}
+```
 
 Dintre d'aquest paràmetre, l'enter indica la prioritat d'execució, en el cas que es vulgui executar més d'un pipeline es pot indicar afegint la prioritat d'execució.
 \vspace{3mm}
 
 Per últim hem afegit dos paràmetres més de configuració, el primer és per indicar que la informació que recol·lecta'm i guardem es processi en 'UTF-8' per evitar que en recuperar-la es perdi o modifiqui, ja que en aquesta pàgina s'utilitza aquesta codificació. L'últim paràmetre indica que només mostrarà per consola la informació rellevant, per tal de poder seguir l'execució de forma correcta i no rebre massa informació irrellevant.
-\begin{lstlisting}[language=Python]
+```python
 FEED_EXPORT_ENCODING = 'utf-8'
 LOG_LEVEL = 'INFO'
-\end{lstlisting}
+```
 
 \vspace{3mm}
 Per a poder observar el resultat, hem modificat l'arxiu \verb|SearchIndex.py|, afegint dues funcions, una per cercar i mostrar de forma adient la informació dels índexs de \verb|Sensacine| i \verb|MejorTorrent| depenent dels arguments introduïts per l'usuari, de tal forma que la funció per \verb|Sensacine| ens queda de la següent manera.
-\begin{lstlisting}[language=Python]
+
+```python
 def search_sensacine():
     try:
         print('=== SensaCine ===\n')
@@ -97,8 +98,7 @@ def search_sensacine():
         print('%d Documents' % response.hits.total.value)
     except NotFoundError:
         print('Index %s does not exist' % index)
-\end{lstlisting}
-
+```
 
 
 ### Problemes a l'implementació
@@ -110,11 +110,10 @@ Donat que l'estructura estava realment clarificada, el temps de realitzar l'anà
 Després de l'execució del nostre scraper, hem obtingut un total de 53106 documents (pel·lícules) amb un tamany de 47.5mb amb una velocitat mitjana de recol·lecció de 500 documents per minut.
 
 Per a veure un exemple sé sortida, podem buscar la pel·lícula Vengadores on aparegui l'actor Robert Deniro
-\begin{lstlisting}[language=bash]
-$ python SearchIndex.py --index scrapy-sensacine --query Titulo:Vengadores
-AND Titulo:Endgame AND Reparto:Robert
-\end{lstlisting}
-\begin{verbatim}
+```bash
+$ python SearchIndex.py --index scrapy-sensacine --query Titulo:Vengadores AND Titulo:Endgame AND Reparto:Robert
+
+
 === SensaCine ===
 
 ----- Vengadores: Endgame -------------------------
@@ -126,19 +125,18 @@ Sinopsis:
 Después de los devastadores eventos ocurridos en Vengadores: Infinity War ...
 =================================================
 1 Documents
-\end{verbatim}
+```
 
 També es pot obtenir les pel·lícules on els medis les han classificades amb un 5, és a dir, la nota més alta.
-\begin{lstlisting}[language=bash]
+
+```bash
 $ python SearchIndex.py --index scrapy-sensacine --query Medios:5
-\end{lstlisting}
-\begin{verbatim}
+
 ...
 51 Documents
-\end{verbatim}
+```
 
 
-\newpage
 ## MejorTorrent
 
 ### Objectiu
@@ -163,11 +161,11 @@ Per ultim comentar, que degut al augment de temps entre peticions (forçat per l
 
 ### Sortida del rastrejador
 En aquest cas farem la mateixa consulta que amb SensaCine, però per obtenir els torrents disponibles de la pel·lícula dels Vengadores
-\begin{lstlisting}[language=bash]
-$ python SearchIndex.py --index scrapy --query Titulo:Vengadores AND
-Titulo:Endgame AND Actores:Robert
-\end{lstlisting}
-\begin{verbatim}
+
+```bash
+$ python SearchIndex.py --index scrapy --query Titulo:Vengadores AND Titulo:Endgame AND Actores:Robert
+
+
 === Mejor Torrent ===
 
 ----- Vengadores: Endgame -------------------------
@@ -192,6 +190,6 @@ Descripción:
 Link Descarga = http://www.mejortorrentt.net/tor/peliculas/Vengadores_Endgame_OPEN_MATTE_Imax_Porper.torrent
 =================================================
 2 Documents
-\end{verbatim}
+```
+
 Com es pot observar obtenim dos documents, ja que disposem de dos torrents diferents de qualitats diferents
-\end{document}
