@@ -53,7 +53,7 @@ def generate_files_list(path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--path', required=False, default='../Sessio1/doc/novels', help='Path to the files')
+    parser.add_argument('--path', required=False, default='../Zipf-and-Heaps/doc/novels', help='Path to the files')
     parser.add_argument('--index', required=False, default='inovels', help='Index for the files')
     parser.add_argument('--token', default='standard', choices=['standard', 'whitespace', 'classic', 'letter'], help='Text tokenizer')
     parser.add_argument('--filter', default=['lowercase', 'stemmer'], nargs=argparse.REMAINDER, help='Text tokenizer: lowercase, '

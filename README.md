@@ -1,11 +1,8 @@
-# RECUPERACIÓN DE LA INFORMACIÓN
-Assignatura RECUPERACIÓ DE LA INFORMACIÓ de la EPSEVG
+# INFORMATION RETRIEVAL
 
-## Instruciones:
-Per poder executar de manera correcta cadascuna de les sessions de laboratori, cal establir la carpeta de la sessió com 'source root' per poder llegir de manera correcta cadascuna de les dependencies.
-## Sessions del laboratori:
-- [ElasticSearch i les lleis de Zipf i Heaps](/Laboratori/Sessio1)
-- [Efectes sobre l’index](/Laboratori/Sessio2)
-- [Web scrapper amb Scrapy](/Laboratori/Sessio3) 
-- [PageRank](/Laboratori/Sessio4) 
-- [MapReduce i anàlisi del comportament de compra](/Laboratori/Sessio5) 
+## Works:
+- [ElasticSearch and the laws of Zipf and Heaps](/Works/Zipf-and-Heaps)
+- [Effects on the index](/Works/effects-on-index)
+- [Web scrapper with Scrapy](/Works/web-scrapper) 
+- [PageRank](/Works/page-rank) 
+- [MapReduce and analysis of purchasing behavior](/Works/mapreduce-and-analysis-of-purchasing) 
