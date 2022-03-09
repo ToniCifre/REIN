@@ -70,7 +70,6 @@ FEED_EXPORT_ENCODING = 'utf-8'
 LOG_LEVEL = 'INFO'
 ```
 
-\vspace{3mm}
 Per a poder observar el resultat, hem modificat l'arxiu **SearchIndex.py**, afegint dues funcions, una per cercar i mostrar de forma adient la informació dels índexs de **Sensacine** i **MejorTorrent** depenent dels arguments introduïts per l'usuari, de tal forma que la funció per **Sensacine** ens queda de la següent manera.
 
 ```python
@@ -146,7 +145,7 @@ Per a poder executar el scraper MejorTorrent hem hagut d'ajustar el fitxer setti
 
 Per evitar ser detectat i bloquejats pel firewall, hem afegit un temps d'espera entre cada petició de dos segons en els setting afegint l'opció **DOWNLOAD_DELAY = 2**.
 
-Per altra banda, la pàgina, també disposa del document robot.txt per tal de fer la petició de no ser rastrejat al robot. En el nostre cas, a l'utilitzar la informació només per un estudi de classe, hem decidit no fer cas a la seva petició afegint l'opció \verb|ROBOTSTXT_OBEY = False| dels settings.
+Per altra banda, la pàgina, també disposa del document robot.txt per tal de fer la petició de no ser rastrejat al robot. En el nostre cas, a l'utilitzar la informació només per un estudi de classe, hem decidit no fer cas a la seva petició afegint l'opció **ROBOTSTXT_OBEY = False** dels settings.
 
 Per últim hem creat una altra classe dintre del fitxer **pipelines.py** de la mateixa forma que amb el scraper SensaCine però amb les modificacions pertinents de l'índex amb el qual és guarda't dintre de l'Elasticsearch.
 
