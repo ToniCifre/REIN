@@ -1,5 +1,7 @@
 # INFORMATION RETRIEVAL
 
+Methods for information retrieval and post-analysis
+
 ## Works:
 - [ElasticSearch and the laws of Zipf and Heaps](/Works/Zipf-and-Heaps)
 - [Effects on the index](/Works/effects-on-index)
