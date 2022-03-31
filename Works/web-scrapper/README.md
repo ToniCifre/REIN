@@ -1,9 +1,5 @@
 # Web Scrapper
 
-Per el nostre treball hem realitzat dos **scrappers** complementaris, un que es dedica a realitzar la busca de pel·lícules d'una pagina web i un altre per trobar aquestes pel·lícules a una pagina de descarregues "poc legals", retornant aixi l'arxiu per la descarrega
-
-Per el primer rastrejador l'hem anomenat Sensacine - Scrappy, donat que actua a la pagina web anomenada, mentres que el segon, l'hem anomenat MejorTorrent - Scrappy per el mateix motiu
-
 ## Sensacine
 
 ### Objectiu
@@ -56,9 +52,7 @@ D'altra banda, per a poder aplicar aquest nou pipeline creat s'ha de modificar l
 
 ```
 ITEM_PIPELINES = {
-   'reinscrapy.pipelines.MejorTorrentElasticPipeline': 300,
-   # 'reinscrapy.pipelines.ReinscrapyPipeline': 300,
-   # 'reinscrapy.pipelines.ReinscrapyElasticPipeline': 300,
+   'reinscrapy.pipelines.ElasticPipeline': 300,
 }
 ```
 
@@ -98,16 +92,10 @@ def search_sensacine():
         print('Index %s does not exist' % index)
 ```
 
-
-### Problemes a l'implementació
-A l'hora de realitzar l'implementació d'aquest rastrejador no hem tingut una gran quantitat de problemes, més enllà de entendre el codi de la pròpia pagina web. 
-
-Donat que l'estructura estava realment clarificada, el temps de realitzar l'anàlisi per saber com indicar els paràmetres que ens interessen guardar ha set pràcticament minúscul
-
 ### Sortida del rastrejador
 Després de l'execució del nostre scraper, hem obtingut un total de 53106 documents (pel·lícules) amb un tamany de 47.5mb amb una velocitat mitjana de recol·lecció de 500 documents per minut.
 
-Per a veure un exemple sé sortida, podem buscar la pel·lícula Vengadores on aparegui l'actor Robert Deniro
+Per a veure un exemple de sortida, podem buscar la pel·lícula Vengadores on aparegui l'actor Robert Deniro
 ```bash
 $ python SearchIndex.py --index scrapy-sensacine --query Titulo:Vengadores AND Titulo:Endgame AND Reparto:Robert
 
