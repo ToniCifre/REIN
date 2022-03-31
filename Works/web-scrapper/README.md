@@ -1,4 +1,4 @@
-# REIN Laboratori 3
+# Web Scrapper
 
 Per el nostre treball hem realitzat dos **scrappers** complementaris, un que es dedica a realitzar la busca de pel·lícules d'una pagina web i un altre per trobar aquestes pel·lícules a una pagina de descarregues "poc legals", retornant aixi l'arxiu per la descarrega
 
